@@ -15,12 +15,27 @@ public class ObjectManager {
 	}
 
 	void update() {
+		if(rocket.isAlive == true) {
 		rocket.update();
+		}
+		else {
+			rocket.x = 2000;
+		}
 		for (Projectile projectile : bullets) {
+			if(projectile.isAlive ==true) {
 			projectile.update();
+			}
+			else {
+				projectile.x=2000;
+			}
 		}
 		for (Alien alien : enemy) {
+			if(alien.isAlive == true) {
 			alien.update();
+		}
+			else {
+				alien.x=2000;
+			}
 		}
 	}
 
@@ -49,11 +64,11 @@ public class ObjectManager {
 		}
 	}
 
-	void purgeObjects(GameObject gameObject) {
+	/*void purgeObjects(GameObject gameObject) {
 if(gameObject.isAlive==false) {
-	gameObject.exit;
+	gameObject.setVisible(false);
 		}
-	}
+	}*/ 
 
 	void checkCollision() {
 		for (Alien alien : enemy) {

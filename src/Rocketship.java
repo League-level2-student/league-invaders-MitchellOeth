@@ -14,6 +14,7 @@ public class Rocketship extends GameObject {
 	}
 
 	void update() {
+		if(isAlive == true) {
 		super.update();
 		if (up == true) {
 			y -= speed;
@@ -28,10 +29,17 @@ public class Rocketship extends GameObject {
 			x -= speed;
 		}
 	}
+		else {
+			x=2000;
+		}
+	}
 
 	void draw(Graphics graphic) {
+		if(isAlive == true) {
 		graphic.setColor(Color.BLUE);
 		graphic.fillRect(x, y, width, height);
-
+		}
+		else {
+x=2000;		}
 	}
 }

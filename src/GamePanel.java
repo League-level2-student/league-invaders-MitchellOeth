@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		you.draw(graphic);
 		objectManager.draw(graphic);
 		objectManager.checkCollision();
-		objectManager.purgeObjects(you);
+		
 	}
 
 	void drawEndState(Graphics graphic) {
