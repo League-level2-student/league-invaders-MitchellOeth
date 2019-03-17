@@ -14,32 +14,32 @@ public class Rocketship extends GameObject {
 	}
 
 	void update() {
-		if(isAlive == true) {
 		super.update();
+		if (GamePanel.allowUp==true) {
 		if (up == true) {
 			y -= speed;
 		}
+		}
+		if (GamePanel.allowDown==true) {
 		if (down == true) {
 			y += speed;
 		}
+		}
+		if (GamePanel.allowRight==true) {
 		if (right == true) {
 			x += speed;
 		}
+		}
+		if (GamePanel.allowLeft==true) {
 		if (left == true) {
 			x -= speed;
 		}
-	}
-		else {
-			x=2000;
 		}
 	}
+		
 
 	void draw(Graphics graphic) {
-		if(isAlive == true) {
 		graphic.setColor(Color.BLUE);
 		graphic.fillRect(x, y, width, height);
 		}
-		else {
-x=2000;		}
-	}
 }

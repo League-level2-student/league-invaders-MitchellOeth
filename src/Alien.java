@@ -17,10 +17,7 @@ public class Alien extends GameObject {
 	}
 
 	void draw(Graphics graphic) {
-		if (isAlive == true) {
 		graphic.setColor(Color.YELLOW);
 		graphic.fillRect(x, y, width, height);
-	}else {
-		x = 2000;
 	}
-}}
+}

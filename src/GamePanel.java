@@ -14,7 +14,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont = new Font("Arial", Font.BOLD, 48);
 	Font normalFont = new Font("Arial", Font.PLAIN, 25);
 	Timer framerate;
-
+	public static boolean allowUp;
+	public static boolean allowDown;
+	public static boolean allowRight;
+	public static boolean allowLeft;
 	GamePanel() {
 		framerate = new Timer(1000 / 60, this);
 		addKeyListener(this);
@@ -52,6 +55,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
+			if (currentState==END_STATE){
+				you = new Rocketship(250,700,50,50);
+				objectManager = new ObjectManager(you);
+			}
 			if (currentState > END_STATE) {
 				currentState = MENU_STATE;
 			}
@@ -62,6 +69,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
 			you.up = true;
 		}
+		
 		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
 			you.down = true;
 		}
@@ -88,11 +96,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	final int MENU_STATE = 0;
-	final int GAME_STATE = 1;
-	final int END_STATE = 2;
-	int currentState = MENU_STATE;
-
+	public final static int MENU_STATE = 0;
+	public final static int GAME_STATE = 1;
+	public final static int END_STATE = 2;
+	public static int currentState = MENU_STATE;
+public static int kill = 0;
 	void updateMenuState() {
 
 	}
@@ -100,6 +108,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		objectManager.update();
 		objectManager.manageEnemies();
+		if(you.y<=50) {
+		allowUp=false;
+		}else {
+			allowUp=true;
+		}
+		if(you.y>=750) {
+			allowDown = false;
+		}else {
+			allowDown = true;
+		}
+		if(you.x<=50) {
+			allowLeft=false;
+		}else {
+			allowLeft=true;
+		}
+		if(you.y>=450) {
+			allowRight=false;
+		}else {
+			allowRight=true;
+		}
 	}
 
 	void updateEndState() {
@@ -133,7 +161,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		graphic.setFont(titleFont);
 		graphic.drawString("GAME OVER", 100, 200);
 		graphic.setFont(normalFont);
-		graphic.drawString("You killed " + 0 + " enemies", 130, 400);
+		graphic.drawString("You killed " + kill + " enemies", 130, 400);
 		graphic.drawString("Press ENTER to restart", 115, 600);
+		if (currentState==END_STATE){
+			you = new Rocketship(250,700,50,50);
+			objectManager = new ObjectManager(you);
+			kill=0;
+		}
 	}
 }
