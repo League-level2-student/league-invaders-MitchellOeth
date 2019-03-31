@@ -9,15 +9,11 @@ public class Alien extends GameObject {
 	void update() {
 		if(isAlive == true) {
 		super.update();
-		y += 1;
+		y += 5;
 	}
-		else {
-			x = 2000;
-		}
 	}
 
 	void draw(Graphics graphic) {
-		graphic.setColor(Color.YELLOW);
-		graphic.fillRect(x, y, width, height);
+		graphic.drawImage(GamePanel.alienImg, x, y, width, height, null);
 	}
 }

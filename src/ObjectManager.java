@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 public class ObjectManager {
 	long enemyTimer = 0;
-	int enemySpawnTime = 5000;
+	int enemySpawnTime = 1000;
 	ArrayList<Alien> enemy = new ArrayList<Alien>();
 	ArrayList<Projectile> bullets = new ArrayList<Projectile>();
 	Rocketship rocket;
@@ -19,7 +19,11 @@ public class ObjectManager {
 		}
 		for (Alien alien : enemy) {
 			alien.update();
+			if(alien.y>=800) {
+				GamePanel.currentState=GamePanel.END_STATE;
+			}
 		}	
+	
 	}
 	void draw(Graphics graphic) {
 		rocket.draw(graphic);
@@ -38,7 +42,7 @@ public class ObjectManager {
 	}
 	public void manageEnemies() {
 		if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-			addAlien(new Alien(new Random().nextInt(LeagueInvaders.width), 0, 50, 50));
+			addAlien(new Alien(new Random().nextInt(LeagueInvaders.width-50), 0, 50, 50));
 			enemyTimer = System.currentTimeMillis();
 		}
 	}

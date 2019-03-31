@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Rocketship you = new Rocketship(250, 700, 50, 50);
 	ObjectManager objectManager = new ObjectManager(you);
@@ -18,9 +20,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean allowDown;
 	public static boolean allowRight;
 	public static boolean allowLeft;
+	 public static BufferedImage alienImg;
+	    public static BufferedImage rocketImg;
+	    public static BufferedImage bulletImg;
+	    public static BufferedImage spaceImg;
 	GamePanel() {
 		framerate = new Timer(1000 / 60, this);
 		addKeyListener(this);
+		try {
+            alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+            rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+            bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+            spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+    } catch (IOException e) {
+            e.printStackTrace();
+    }
 	}
 
 	void startGame() {
@@ -108,22 +122,22 @@ public static int kill = 0;
 	void updateGameState() {
 		objectManager.update();
 		objectManager.manageEnemies();
-		if(you.y<=50) {
+		if(you.y<=0) {
 		allowUp=false;
 		}else {
 			allowUp=true;
 		}
-		if(you.y>=750) {
+		if(you.y>=730) {
 			allowDown = false;
 		}else {
 			allowDown = true;
 		}
-		if(you.x<=50) {
+		if(you.x<=0) {
 			allowLeft=false;
 		}else {
 			allowLeft=true;
 		}
-		if(you.y>=450) {
+		if(you.x>=450) {
 			allowRight=false;
 		}else {
 			allowRight=true;
@@ -143,11 +157,11 @@ public static int kill = 0;
 		graphic.setFont(normalFont);
 		graphic.drawString("Press ENTER to start", 125, 400);
 		graphic.drawString("Press SPACE for instructions", 75, 600);
+		kill=0;
 	}
 
 	void drawGameState(Graphics graphic) {
-		graphic.setColor(Color.BLACK);
-		graphic.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+		graphic.drawImage(spaceImg, 0, 0, LeagueInvaders.width, LeagueInvaders.height, null);
 		you.draw(graphic);
 		objectManager.draw(graphic);
 		objectManager.checkCollision();
@@ -166,7 +180,6 @@ public static int kill = 0;
 		if (currentState==END_STATE){
 			you = new Rocketship(250,700,50,50);
 			objectManager = new ObjectManager(you);
-			kill=0;
 		}
 	}
 }
